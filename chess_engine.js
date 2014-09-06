@@ -5,13 +5,40 @@
 // Let the color of the paths corelate to the english
 // algebraic notation for chess pieces:
 // http://en.wikipedia.org/wiki/Algebraic_notation_(chess)#Figurine_algebraic_notation
+//
+// Mapping must start with the king.  There is an 8 by 8 in chess that
+// made up of 64 random nodes.  White king maps the board, black king is
+// placed in relation to white king.
 
+BoardNode = function() {
+  //null implies empty node
+  this.ocupiedByPiece = null;
+  this.neighbors = {
+    n: null,  //north
+    e: null,  //east
+    s: null,  // ...
+    w: null,
+    ne: null,
+    nw: null,
+    se: null,
+    sw: null
+  }
+};
 
-Board = function() {};
+Board = function() {
+  this.nodes = this.getNNodes(64);
 
-Board.prototype.HEIGHT = 8;
-Board.prototype.WIDTH = 8;
+  
 
+};
+
+Board.prototype.getNNodes = function(num_nodes) {
+  nodes = [];
+  for(i = 0; i < num_nodes; i++){
+    nodes.push(new BoardNode());
+  }
+  return nodes;
+};
 
 BoardPiece = function(board) {
   this.BOARD = board;

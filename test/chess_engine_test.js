@@ -1,16 +1,22 @@
-var assert = require("assert");
+var assert = require("should");
 require("../chess_engine.js");
 
+
 describe('Board', function(){
-  it('should return the correct HEIGHT and WIDTH', function(){
+  it('', function(){
     board = new Board();
-    assert.equal(board.HEIGHT, 8);
-    assert.equal(board.WIDTH, 8);
+  });
+});
+
+describe('BoardNode', function(){
+  it('should contain stuff', function(){
+    board_node = new BoardNode();
+    (typeof board_node.neighbors).should.not.equal('undefined');
+    (typeof board_node.ocupiedByPiece).should.not.equal('undefined');
   });
 });
 
 describe('BoardPiece', function(){
   it('#label', function(){
-    assert.equal((new BoardPiece('some_label')).label, 'some_label');
   });
 });
