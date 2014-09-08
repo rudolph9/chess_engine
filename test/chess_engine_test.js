@@ -5,6 +5,7 @@ require("../chess_engine.js");
 describe('Board', function(){
   it('', function(){
     board = new Board();
+    board.nodes.length.should.equal(64);
   });
 });
 

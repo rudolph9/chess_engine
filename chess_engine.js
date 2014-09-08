@@ -26,14 +26,28 @@ BoardNode = function() {
 };
 
 Board = function() {
-  this.nodes = this.getNNodes(64);
+  this.nodes = buildBoardNodes();
+};
 
-  
+Board.prototype.buildBoardNodes = function() {
+  var nodes = []; // an array of arrys
+  var height = 8;
+  var width = 8;
+  for(i = 0; i < height; i++){
+    nodes.push(this.getNNodes(width));
+  }
 
+  // I'm trying to connect each row to each subsiquent row.
+  nodes.reduce(function(prev_row, cur_row) {
+    prev_row.foreach(function(node, i) {
+      node.neighbors.n = cur_row[i];
+      node.neighbors.n.neighbors.s = node;
+    })
+  return nodes;
 };
 
 Board.prototype.getNNodes = function(num_nodes) {
-  nodes = [];
+  var nodes = [];
   for(i = 0; i < num_nodes; i++){
     nodes.push(new BoardNode());
   }
