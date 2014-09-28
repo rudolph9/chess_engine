@@ -25,8 +25,26 @@ BoardNode = function() {
   }
 };
 
+BoardNode.prototype.opositeNeighborDirection = {
+  n: 's',
+  e: 'w',
+  s: 'n',
+  w: 'e',
+  ne: 'sw',
+  nw: 'se',
+  se: 'nw',
+  sw: 'ne'
+};
+
+BoardNode.prototype.setNeighbor = function(direction, node) {
+  // maybe add something to verify the direction is valid?
+
+  this.neighbors[direction] = node;
+  node.neighbors[this.opositeNeighborDirection[direction]] = this;
+};
+
 Board = function() {
-  this.nodes = buildBoardNodes();
+  this.nodes = this.buildBoardNodes();
 };
 
 Board.prototype.buildBoardNodes = function() {
@@ -37,12 +55,14 @@ Board.prototype.buildBoardNodes = function() {
     nodes.push(this.getNNodes(width));
   }
 
-  // I'm trying to connect each row to each subsiquent row.
+  // Connect each row to each subsiquent row.
   nodes.reduce(function(prev_row, cur_row) {
     prev_row.foreach(function(node, i) {
-      node.neighbors.n = cur_row[i];
-      node.neighbors.n.neighbors.s = node;
+      node.setNeighbor('n', cur_row[i]);
     })
+  });
+
+  
   return nodes;
 };
 
