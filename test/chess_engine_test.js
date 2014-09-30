@@ -8,10 +8,26 @@ describe('Board', function(){
     board = new Board();
     done();
   });
+  describe('#connectEachRowToEachSubsiquentRow', function(){
+    it('should work for 4 nodes', function(){
+      var n_a0 = new BoardNode();
+      var n_a1 = new BoardNode();
+      var n_b0 = new BoardNode();
+      var n_b1 = new BoardNode();
+      var nodes = [[n_a0, n_a1], [n_b0, n_b1]]
+      board.connectEachRowToEachSubsiquentRow(nodes);
+      expect(n_a0.n()).to.equal(null);
+      expect(n_a0.s()).to.equal(n_b0);
+      expect(n_b1.n()).to.equal(n_a1);
+      expect(n_b1.s()).to.equal(null);
+    });
+  });
 
-  it('should do something', function(){
-    var board = new Board();
-    //expect(board.nodes.length).not.to.equal(64);
+
+  describe('#buildBoardNodes', function(){
+    it('should attach', function(){
+      //yup
+    });
   });
 
   describe('#getNNodes', function(){

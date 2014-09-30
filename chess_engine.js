@@ -1,3 +1,4 @@
+var _ = require('underscore');
 // Lets start by building the classes which map
 // the directed colored graph we will use to idenify
 // the available moves to a player.
@@ -25,6 +26,15 @@ BoardNode = function() {
   }
 };
 
+// Set up convienet accessors for a BoardNode.
+// bn = new BoardNode()
+// bn.n() // => returns what ever bn.neighbors.n is storing
+_.each((new BoardNode()).neighbors, function(value, key){
+  BoardNode.prototype[key] = function(){
+    return this.neighbors[key];
+  };
+});
+
 BoardNode.prototype.opositeNeighborDirection = {
   n: 's',
   e: 'w',
@@ -44,26 +54,28 @@ BoardNode.prototype.setNeighbor = function(direction, node) {
 };
 
 Board = function() {
-  this.nodes = this.buildBoardNodes();
+  this.nodes = null;
 };
+Board.prototype.HEIGHT = 8;
+Board.prototype.WIDTH  = 8;
 
 Board.prototype.buildBoardNodes = function() {
-  var nodes = []; // an array of arrys
-  var height = 8;
-  var width = 8;
-  for(i = 0; i < height; i++){
-    nodes.push(this.getNNodes(width));
+  this.nodes = []; // an array of arrys
+  for(i = 0; i < this.HEIGHT; i++){
+    nodes.push(this.getNNodes(this.WIDTH));
   }
 
-  // Connect each row to each subsiquent row.
-  nodes.reduce(function(prev_row, cur_row) {
-    prev_row.foreach(function(node, i) {
-      node.setNeighbor('n', cur_row[i]);
-    })
-  });
+  this.connectEachRowToEachSubsiquentRow(nodes);
 
-  
   return nodes;
+};
+
+Board.prototype.connectEachRowToEachSubsiquentRow = function(nodes) {
+  nodes.reduce(function(prev_row, cur_row) {
+    prev_row.forEach(function(node, i) {
+      node.setNeighbor('s', cur_row[i]);
+    });
+  });
 };
 
 Board.prototype.getNNodes = function(num_nodes) {
