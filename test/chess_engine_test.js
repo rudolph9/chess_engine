@@ -14,7 +14,7 @@ describe('Board', function(){
       var n_a1 = new BoardNode();
       var n_b0 = new BoardNode();
       var n_b1 = new BoardNode();
-      var nodes = [[n_a0, n_a1], [n_b0, n_b1]]
+      var nodes = [[n_a0, n_a1], [n_b0, n_b1]];
       board.connectEachRowToEachSubsiquentRow(nodes);
       expect(n_a0.n()).to.equal(null);
       expect(n_a0.s()).to.equal(n_b0);
@@ -36,6 +36,20 @@ describe('Board', function(){
       expect(nodes.length).to.equal(8);
       nodes.forEach(function(node, i) {
         expect(node.constructor).to.equal(BoardNode);
+      });
+    });
+  });
+  describe('#transpose', function(){
+    it('should transpose 2x2 board (i.e. the matrix passed in argument)', function(){
+      var nodes = [['n_a0', 'n_a1'], ['n_b0', 'n_b1']];
+      board.transpose(nodes, function(nodes_0){
+        expect(nodes_0).to.eql([['n_a0', 'n_b0'], ['n_a1', 'n_b1']]);
+      });
+    });
+    it('should transpose 3x3 board (i.e. the matrix passed in argument)', function(){
+      var nodes = [['n_a0', 'n_a1', 'n_a2'], ['n_b0', 'n_b1', 'n_b2'], ['n_c0', 'n_c1', 'n_c2']];
+      board.transpose(nodes, function(nodes_0){
+        expect(nodes_0).to.eql([['n_a0', 'n_b0', 'n_c0'], ['n_a1', 'n_b1', 'n_c1'], ['n_a2', 'n_b2', 'n_c2']]);
       });
     });
   });

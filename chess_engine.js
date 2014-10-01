@@ -61,13 +61,32 @@ Board.prototype.WIDTH  = 8;
 
 Board.prototype.buildBoardNodes = function() {
   this.nodes = []; // an array of arrys
-  for(i = 0; i < this.HEIGHT; i++){
+  for(/*var prob needed but working on something else right night and need to check later*/ i = 0; i < this.HEIGHT; i++){
     nodes.push(this.getNNodes(this.WIDTH));
   }
 
   this.connectEachRowToEachSubsiquentRow(nodes);
 
   return nodes;
+};
+
+
+// @param matrix [Array] an array of 
+// NOTE: only works for 2d matricies, consider
+// making the function recursive to make it condusive
+// to any dementional matrix.
+// @ param callback [function] a function to be called with the
+// transposed matrix.
+Board.prototype.transpose = function(matrix, callback) {
+  _.tap([], function(matrix_0){
+    _.each(matrix, function(row, i){
+      matrix_0[i] = [];
+      _.each(row, function(cell, j){
+        matrix_0[i][j] = matrix[j][i];
+      });
+    });
+    callback(matrix_0);
+  });
 };
 
 Board.prototype.connectEachRowToEachSubsiquentRow = function(nodes) {
