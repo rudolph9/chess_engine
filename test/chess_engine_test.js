@@ -22,6 +22,20 @@ describe('Board', function(){
       expect(n_b1.s()).to.equal(null);
     });
   });
+  describe('#connectEachColumnToEachSubsiquentColoumn', function(){
+    it('should work for 4 nodes', function(){
+      var n_a0 = new BoardNode();
+      var n_a1 = new BoardNode();
+      var n_b0 = new BoardNode();
+      var n_b1 = new BoardNode();
+      var nodes = [[n_a0, n_a1], [n_b0, n_b1]];
+      board.connectEachColumnToEachSubsiquentColoumn(nodes);
+      expect(n_a0.w()).to.equal(null);
+      expect(n_a0.e()).to.equal(n_a1);
+      expect(n_b1.w()).to.equal(n_b0);
+      expect(n_b1.e()).to.equal(null);
+    });
+  });
 
 
   describe('#buildBoardNodes', function(){
