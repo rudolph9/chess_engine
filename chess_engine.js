@@ -48,6 +48,7 @@ BoardNode.prototype.opositeNeighborDirection = {
 
 BoardNode.prototype.setNeighbor = function(direction, node) {
   // maybe add something to verify the direction is valid?
+  if (!node) return false;
 
   this.neighbors[direction] = node;
   node.neighbors[this.opositeNeighborDirection[direction]] = this;
@@ -100,6 +101,14 @@ Board.prototype.connectEachColumnToEachSubsiquentColoumn = function(nodes) {
 Board.prototype.connectEachRowToEachSubsiquentRow = function(nodes) {
   this.connectEachHelper(nodes, 's');
 };
+
+Board.prototype.connectEachDiaginalToEachSubsiquentDiagnal = function(nodes, neighbor_direction) {
+  nodes.forEach(function(row, i) {
+    row.forEach(function(node, j) {
+      node.setNeighbor(neighbor_direction, ((nodes[i + 1]||[])[j + 1] || null));
+    });
+  });
+}
 
 Board.prototype.connectEachHelper = function(nodes, neighbor_direction) {
   nodes.reduce(function(prev_row, cur_row) {

@@ -36,7 +36,39 @@ describe('Board', function(){
       expect(n_b1.e()).to.equal(null);
     });
   });
-
+  describe('#connectEachDiaginalToEachSubsiquentDiagnal', function(){
+    it('should work for 4 nodes', function(){
+      var n_a0 = new BoardNode();
+      var n_a1 = new BoardNode();
+      var n_b0 = new BoardNode();
+      var n_b1 = new BoardNode();
+      var nodes = [[n_a0, n_a1], [n_b0, n_b1]];
+      board.connectEachDiaginalToEachSubsiquentDiagnal(nodes, 'se');
+      expect(n_a0.sw()).to.equal(null);
+      expect(n_a0.nw()).to.equal(null);
+      expect(n_a0.se()).to.equal(n_b1);
+      expect(n_a1.se()).to.equal(null);
+    });
+    it('should work for 9 nodes', function(){
+      var n_a0 = new BoardNode();
+      var n_a1 = new BoardNode();
+      var n_a2 = new BoardNode();
+      var n_b0 = new BoardNode();
+      var n_b1 = new BoardNode();
+      var n_b2 = new BoardNode();
+      var n_c0 = new BoardNode();
+      var n_c1 = new BoardNode();
+      var n_c2 = new BoardNode();
+      var nodes = [[n_a0, n_a1, n_a2], [n_b0, n_b1, n_b2], [n_c0, n_c1, n_c2]];
+      board.connectEachDiaginalToEachSubsiquentDiagnal(nodes, 'se');
+      expect(n_a0.sw()).to.equal(null);
+      expect(n_a0.nw()).to.equal(null);
+      expect(n_a0.se()).to.equal(n_b1);
+      expect(n_a1.se()).to.equal(n_b2);
+      expect(n_b1.se()).to.equal(n_c2);
+      expect(n_b1.nw()).to.equal(n_a0);
+    });
+  });
 
   describe('#buildBoardNodes', function(){
     it('should attach', function(){
