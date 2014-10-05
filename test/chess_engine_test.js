@@ -72,7 +72,17 @@ describe('Board', function(){
 
   describe('#buildBoardNodes', function(){
     it('should attach', function(){
-      //yup
+      board.buildBoardNodes();
+      expect(board.nodes[0][0].s()).to.equal(board.nodes[1][0]);
+
+      expect(board.nodes[3][3].n()).to.equal(board.nodes[2][3]);
+      expect(board.nodes[3][3].e()).to.equal(board.nodes[3][4]);
+      expect(board.nodes[3][3].s()).to.equal(board.nodes[4][3]);
+      expect(board.nodes[3][3].w()).to.equal(board.nodes[3][2]);
+      expect(board.nodes[3][3].ne()).to.equal(board.nodes[2][4]);
+      expect(board.nodes[3][3].nw()).to.equal(board.nodes[2][2]);
+      expect(board.nodes[3][3].se()).to.equal(board.nodes[4][4]);
+      expect(board.nodes[3][3].sw()).to.equal(board.nodes[4][2]);
     });
   });
 

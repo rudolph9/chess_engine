@@ -62,12 +62,16 @@ Board.prototype.WIDTH  = 8;
 
 Board.prototype.buildBoardNodes = function() {
   this.nodes = []; // an array of arrys
+  var nodes = this.nodes;
+  var i;
   for(/*var prob needed but working on something else right night and need to check later*/ i = 0; i < this.HEIGHT; i++){
     nodes.push(this.getNNodes(this.WIDTH));
   }
 
   this.connectEachRowToEachSubsiquentRow(nodes);
   this.connectEachColumnToEachSubsiquentColoumn(nodes);
+  this.connectEachDiaginalToEachSubsiquentDiagnal(nodes, 'se');
+  this.connectEachDiaginalToEachSubsiquentDiagnal(nodes.reverse(), 'ne'); nodes.reverse();
 
   return nodes;
 };
@@ -115,6 +119,7 @@ Board.prototype.connectEachHelper = function(nodes, neighbor_direction) {
     prev_row.forEach(function(node, i) {
       node.setNeighbor(neighbor_direction, cur_row[i]);
     });
+    return cur_row;
   });
 };
 
