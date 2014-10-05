@@ -1,4 +1,6 @@
 var _ = require('underscore');
+var ko = require('knockout');
+
 // Lets start by building the classes which map
 // the directed colored graph we will use to idenify
 // the available moves to a player.
