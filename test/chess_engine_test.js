@@ -123,13 +123,35 @@ describe('BoardNode', function(){
       var node0 = new BoardNode();
       var node1 = new BoardNode();
       node0.setNeighbor('n', node1);
-      expect(node0.neighbors().n).to.equal(node1);
-      expect(node1.neighbors().s).to.equal(node0);
+      expect(node0.neighbors.n).to.equal(node1);
+      expect(node1.neighbors.s).to.equal(node0);
     });
   })
 });
 
 describe('BoardPiece', function(){
   it('#label', function(){
+  });
+});
+
+
+describe('KO', function(){
+  var ko = require('knockout');
+  it('should be able to store computable return in a computable array', function(){
+    var MyComputable = function() {
+      var self = this;
+      this.a = ko.observable(null);
+      this.b = ko.computed(function(){
+        if(self.a() === null) return null;
+        return self.a() + 'something';
+      });
+    };
+
+    mc = new MyComputable();
+    expect(mc.a()).to.equal(null);
+    expect(mc.b()).to.equal(null);
+
+    mc.a('hello ')
+    expect(mc.b()).to.eql('hello something');
   });
 });

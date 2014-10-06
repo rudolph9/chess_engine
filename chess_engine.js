@@ -15,7 +15,7 @@ var ko = require('knockout');
 
 BoardNode = function() {
   //null implies empty node
-  this.ocupiedByPiece = null;
+  this.ocupiedByPiece = ko.observable(null);
   this.neighbors = {
     n: null,  //north
     e: null,  //east
@@ -31,9 +31,9 @@ BoardNode = function() {
 // Set up convienet accessors for a BoardNode.
 // bn = new BoardNode()
 // bn.n() // => returns what ever bn.neighbors.n is storing
-_.each((new BoardNode()).neighbors(), function(value, key){
+_.each((new BoardNode()).neighbors, function(value, key){
   BoardNode.prototype[key] = function(){
-    return this.neighbors()[key];
+    return this.neighbors[key];
   };
 });
 
@@ -52,8 +52,8 @@ BoardNode.prototype.setNeighbor = function(direction, node) {
   // maybe add something to verify the direction is valid?
   if (!node) return false;
 
-  this.neighbors()[direction] = node;
-  node.neighbors()[this.opositeNeighborDirection[direction]] = this;
+  this.neighbors[direction] = node;
+  node.neighbors[this.opositeNeighborDirection[direction]] = this;
 };
 
 Board = function() {
@@ -135,7 +135,20 @@ Board.prototype.getNNodes = function(num_nodes) {
 
 BoardPiece = function(board) {
   this.BOARD = board;
+  this.ocupyingNode = ko.observable(null);
+
+  // active:
+  //   1.  Describes a piece that controls a number of squares, or a piece that has a number of squares available for its next move.
+  //   2.  An "active defense" is a defense employing threat(s) or counterattack(s).
+  //this.active_moves = ko.computable(function(){
+  //  var self = this;
+  //  return _.tap({}, function(neighbors){
+  //    _.each(this.ocupyingNode().try('neighbors'), function(v,k){
+  //      neighbors[
+  //    }
+  //});
 };
+
 
 ChessBoardPiece = function(chess_board) {
   BoardPiece.call(this, chess_board);
