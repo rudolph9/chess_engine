@@ -118,7 +118,7 @@ describe('BoardNode', function(){
     expect(typeof board_node.ocupiedByPiece).not.to.equal('undefined');
   });
 
-  describe('#addtachNodes', function(){
+  describe('#setNeighbor', function(){
     it('should attach two board nodes', function(){
       var node0 = new BoardNode();
       var node1 = new BoardNode();
