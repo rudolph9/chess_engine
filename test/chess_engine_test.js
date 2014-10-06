@@ -123,8 +123,8 @@ describe('BoardNode', function(){
       var node0 = new BoardNode();
       var node1 = new BoardNode();
       node0.setNeighbor('n', node1);
-      expect(node0.neighbors.n).to.equal(node1);
-      expect(node1.neighbors.s).to.equal(node0);
+      expect(node0.neighbors().n).to.equal(node1);
+      expect(node1.neighbors().s).to.equal(node0);
     });
   })
 });

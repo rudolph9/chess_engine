@@ -31,9 +31,9 @@ BoardNode = function() {
 // Set up convienet accessors for a BoardNode.
 // bn = new BoardNode()
 // bn.n() // => returns what ever bn.neighbors.n is storing
-_.each((new BoardNode()).neighbors, function(value, key){
+_.each((new BoardNode()).neighbors(), function(value, key){
   BoardNode.prototype[key] = function(){
-    return this.neighbors[key];
+    return this.neighbors()[key];
   };
 });
 
@@ -52,8 +52,8 @@ BoardNode.prototype.setNeighbor = function(direction, node) {
   // maybe add something to verify the direction is valid?
   if (!node) return false;
 
-  this.neighbors[direction] = node;
-  node.neighbors[this.opositeNeighborDirection[direction]] = this;
+  this.neighbors()[direction] = node;
+  node.neighbors()[this.opositeNeighborDirection[direction]] = this;
 };
 
 Board = function() {
