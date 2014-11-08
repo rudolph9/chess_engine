@@ -24,7 +24,7 @@ BoardPiece = function(board) {
   // active:
   //   1.  Describes a piece that controls a number of squares, or a piece that has a number of squares available for its next move.
   //   2.  An "active defense" is a defense employing threat(s) or counterattack(s).
-  //this.active_moves = ko.computable(function(){
+  //this.activeMoves = ko.computable(function(){
   //  var self = this;
   //  return _.tap({}, function(neighbors){
   //    _.each(this.ocupyingNode().try('neighbors'), function(v,k){
@@ -37,9 +37,25 @@ ChessBoardPiece = function(chess_board) {
   BoardPiece.call(this, chess_board);
 };
 ChessBoardPiece.prototype = Object.create(BoardPiece.prototype);
-ChessBoardPiece.prototype.availableMoves = function() {
+ChessBoardPiece.prototype.activeMoves = function() {
   return [];
 };
+
+King = function(chess_board) {
+  BoardPiece.call(this, chess_board);
+  var self = this;
+
+  this.activeMoves = ko.pureComputed(function(){
+    //iterate through each neighbor and idenfy each empty not null node
+    var moves = [];
+    _.each(self.ocupyingNode().neighbors, function(n,dir){
+      if(n && !n.ocupiedByPiece()) moves.push(n);
+    });
+    return moves;
+  });
+};
+King.prototype = Object.create(ChessBoardPiece.prototype);
+
 
 // Pawns are actully kind of difficult, lets start with king.
 /*

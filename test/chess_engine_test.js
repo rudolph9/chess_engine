@@ -132,6 +132,18 @@ describe('BoardNode', function(){
 describe('BoardPiece', function(){
   it('#label', function(){
   });
+  describe('King', function(){
+    it('should return only all neigbors as availbe moves', function() {
+      board = new Board();
+      board.buildBoardNodes();
+      king = new King();
+      king.ocupyingNode(board.nodes[1][1]);
+      king.ocupyingNode().ocupiedByPiece(king);
+      var i = 0;
+      _.each(king.activeMoves(), function() { i++; });
+      expect(i).to.equal(8);
+    });
+  });
 });
 
 
