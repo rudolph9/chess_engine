@@ -17,8 +17,9 @@ require('./board');
 // placed in relation to white king.
 
 
-BoardPiece = function(board, ocupyingNode) {
+BoardPiece = function(board, ocupyingNode, team) {
   var self = this;
+  this.TEAM = team
   this.BOARD = board;
   this.ocupyingNodeObsv = ko.observable(null);
   this.ocupyingNode = ko.computed({ // this could probably be a pureComputed but I'm holding off until I get better test coverage to verify this.
@@ -45,16 +46,16 @@ BoardPiece = function(board, ocupyingNode) {
   //});
 };
 
-ChessBoardPiece = function(chessBoard, ocupyingNode) {
-  BoardPiece.call(this, chessBoard, ocupyingNode);
+ChessBoardPiece = function(chessBoard, ocupyingNode, team) {
+  BoardPiece.call(this, chessBoard, ocupyingNode, team);
 };
 ChessBoardPiece.prototype = Object.create(BoardPiece.prototype);
 ChessBoardPiece.prototype.activeMoves = function() {
   return [];
 };
 
-King = function(chessBoard, ocupyingNode) {
-  BoardPiece.call(this, chessBoard, ocupyingNode);
+King = function(chessBoard, ocupyingNode, team) {
+  BoardPiece.call(this, chessBoard, ocupyingNode, team);
   var self = this;
 
   this.activeMoves = ko.pureComputed(function(){
@@ -64,7 +65,7 @@ King = function(chessBoard, ocupyingNode) {
 
     //iterate through each neighbor and idenfy each empty not null node
     _.each(self.ocupyingNode().neighbors, function(n,dir){
-      if(n && !n.ocupiedByPiece()) moves.push(n);
+      if((n && !n.ocupiedByPiece()) || (n && n.ocupiedByPiece().TEAM !== self.TEAM) ) moves.push(n);
     });
     return moves;
   });
@@ -78,17 +79,16 @@ Pawn = function(chessBoard, ocupyingNode, forwardDir) {
   this.forwardDir = forwardDir;
 
   this.activeMoves = ko.pureComputed(function(){
-    //iterate through each neighbor and idenfy each empty not null node
-    var moves = [];
-    _.each(self.ocupyingNode().neighbors, function(n,dir){
-      if(n && !n.ocupiedByPiece()) moves.push(n);
-    });
+    // this is prime for refactoring to be inherted somehow among all activeMoves ko.computeds
+    var moves = []; 
+    if (!self.ocupyingNode()) return moves;
+
+    this.currently
+
     return moves;
   });
 };
 Pawn.prototype = Object.create(ChessBoardPiece.prototype);
-Pawn.prototype.availableMoves = function() {
-  var cur_pos = this.BOARD.position_of(this);
-  var moves = [ new ChessBoardPiecePosition(cur_pos.x, cur_pos.y + 1) ];
-};
+
+Pawn.prototype.
 */
