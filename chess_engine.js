@@ -27,8 +27,8 @@ BoardPiece = function(board, ocupyingNode, team) {
     write: function(value) {
       if (value && value.ocupiedByPiece()) throw 'node already ocupied'; //if trying to move to an occupied node
       if (value) value.ocupiedByPiece(self);
-      self.ocupyingNodeObsv(value);
       if (self.ocupyingNode()) self.ocupyingNode().ocupiedByPiece(null); // if currently occupying a node
+      self.ocupyingNodeObsv(value);
     }
   });
   this.ocupyingNode(ocupyingNode);
@@ -58,14 +58,14 @@ King = function(chessBoard, ocupyingNode, team) {
   BoardPiece.call(this, chessBoard, ocupyingNode, team);
   var self = this;
 
-  this.activeMoves = ko.pureComputed(function(){
+  this.activeMoves = ko.computed(function(){
     // this is prime for refactoring to be inherted somehow among all activeMoves ko.computeds
     var moves = []; 
     if (!self.ocupyingNode()) return moves;
 
     //iterate through each neighbor and idenfy each empty not null node
     _.each(self.ocupyingNode().neighbors, function(n,dir){
-      if((n && !n.ocupiedByPiece()) || (n && n.ocupiedByPiece().TEAM !== self.TEAM) ) moves.push(n);
+      if (n && (!n.ocupiedByPiece() || (n.ocupiedByPiece().TEAM !== self.TEAM))) moves.push(n);
     });
     return moves;
   });

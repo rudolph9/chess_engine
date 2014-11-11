@@ -166,6 +166,14 @@ describe('BoardPiece', function(){
       var king = new King(board, null);
       expect(king.activeMoves().length).to.equal(0);
     });
+    it('should return array containing only opossing team node', function() {
+      var king = new King(board, board.nodes[0][0], 'TeamA');
+      var k1 = new King(board, board.nodes[0][1], 'TeamA');
+      var k2 = new King(board, board.nodes[1][0], 'TeamA');
+      var kingTeamB = new King(board, board.nodes[1][1], 'TeamB');
+      expect(king.activeMoves().length).to.equal(1);
+      expect(king.activeMoves()[0].ocupiedByPiece()).to.equal(kingTeamB);
+    });
   });
 });
 
