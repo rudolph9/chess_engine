@@ -68,11 +68,20 @@ King = function(chessBoard, ocupyingNode) {
 };
 King.prototype = Object.create(ChessBoardPiece.prototype);
 
-
-// Pawns are actully kind of difficult, lets start with king.
 /*
-Pawn = function(chessBoard) {
-  ChessBoardPiece.call(this, chessBoard);
+// @param forwardDir [Sting] representing the direction
+Pawn = function(chessBoard, ocupyingNode, forwardDir) {
+  ChessBoardPiece.call(this, chessBoard, ocupyingNode);
+  this.forwardDir = forwardDir;
+
+  this.activeMoves = ko.pureComputed(function(){
+    //iterate through each neighbor and idenfy each empty not null node
+    var moves = [];
+    _.each(self.ocupyingNode().neighbors, function(n,dir){
+      if(n && !n.ocupiedByPiece()) moves.push(n);
+    });
+    return moves;
+  });
 };
 Pawn.prototype = Object.create(ChessBoardPiece.prototype);
 Pawn.prototype.availableMoves = function() {
