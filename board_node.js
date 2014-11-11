@@ -19,6 +19,7 @@ BoardNode.prototype.neighborKeys = [
 // Set up convienet accessors for a BoardNode.
 // bn = new BoardNode()
 // bn.n() // => returns what ever bn.neighbors.n is storing
+// NOTE: this could use some refactoring to use neighborKeys and avoid creating a new BoardNode() object
 _.each((new BoardNode()).neighbors, function(value, key){
   BoardNode.prototype[key] = function(){
     return this.neighbors[key];
