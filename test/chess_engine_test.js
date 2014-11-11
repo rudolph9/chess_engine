@@ -127,6 +127,14 @@ describe('BoardNode', function(){
       expect(node1.neighbors.s).to.equal(node0);
     });
   })
+  describe('#neighborByIndex', function(){
+    it('should return the neighbor by index', function(){
+      var bn = new BoardNode();
+      var bn1 = new BoardNode();
+      bn.setNeighbor('n', bn1);
+      expect(bn.neighborByIndex(0)).to.equal(bn1);
+    });
+  });
 });
 
 describe('BoardPiece', function(){

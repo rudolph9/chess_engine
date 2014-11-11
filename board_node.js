@@ -16,6 +16,7 @@ BoardNode.prototype.neighborKeys = [
   'w',
   'nw'];
 
+
 // Set up convienet accessors for a BoardNode.
 // bn = new BoardNode()
 // bn.n() // => returns what ever bn.neighbors.n is storing
@@ -26,7 +27,14 @@ _.each((new BoardNode()).neighbors, function(value, key){
   };
 });
 
-//BoardNode.prototype.neighborsAry = _.map(_.keys(self.neighbors), function(dir) { return (function() {return self.neighbors[dir];}); });
+
+BoardNode.prototype.neighborByIndex = function(i) {
+  if (i > this.neighborKeys.length - 1 || i < -this.neighborKeys.length) throw 'index out of bounds must be less than ' + this.neighborKeys.length;
+  if (i < 0) i = this.neighborKeys.length - i + 1;
+  return this[this.neighborKeys[i]]();
+};
+
+
 
 BoardNode.prototype.opositeNeighborDirection = {
   n: 's',
