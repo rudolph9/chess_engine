@@ -58,8 +58,11 @@ King = function(chessBoard, ocupyingNode) {
   var self = this;
 
   this.activeMoves = ko.pureComputed(function(){
+    // this is prime for refactoring to be inherted somehow among all activeMoves ko.computeds
+    var moves = []; 
+    if (!self.ocupyingNode()) return moves;
+
     //iterate through each neighbor and idenfy each empty not null node
-    var moves = [];
     _.each(self.ocupyingNode().neighbors, function(n,dir){
       if(n && !n.ocupiedByPiece()) moves.push(n);
     });

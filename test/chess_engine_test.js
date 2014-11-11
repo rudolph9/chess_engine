@@ -162,6 +162,10 @@ describe('BoardPiece', function(){
       king.ocupyingNode(board.nodes[0][0]);
       i=0; _.each(king.activeMoves(), function() { i++; }); expect(i).to.equal(3);
     });
+    it('should return an empty arry when not occupying a node', function() {
+      var king = new King(board, null);
+      expect(king.activeMoves().length).to.equal(0);
+    });
   });
 });
 
