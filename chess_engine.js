@@ -17,9 +17,21 @@ require('./board');
 // placed in relation to white king.
 
 
-BoardPiece = function(board) {
+BoardPiece = function(board, ocupyingNode) {
+  var self = this;
   this.BOARD = board;
-  this.ocupyingNode = ko.observable(null);
+  this.ocupyingNodeObsv = ko.observable(null);
+  this.ocupyingNode = ko.computed({ // this could probably be a pureComputed but I'm holding off until I get better test coverage to verify this.
+    read: function() { return self.ocupyingNodeObsv(); },
+    write: function(value) {
+      if (value && value.ocupiedByPiece()) throw 'node already ocupied'; //if trying to move to an occupied node
+      if (value) value.ocupiedByPiece(self);
+      self.ocupyingNodeObsv(value);
+      if (self.ocupyingNode()) self.ocupyingNode().ocupiedByPiece(null); // if currently occupying a node
+    }
+  });
+  this.ocupyingNode(ocupyingNode);
+ 
 
   // active:
   //   1.  Describes a piece that controls a number of squares, or a piece that has a number of squares available for its next move.
@@ -33,16 +45,16 @@ BoardPiece = function(board) {
   //});
 };
 
-ChessBoardPiece = function(chess_board) {
-  BoardPiece.call(this, chess_board);
+ChessBoardPiece = function(chess_board, ocupyingNode) {
+  BoardPiece.call(this, chess_board, ocupyingNode);
 };
 ChessBoardPiece.prototype = Object.create(BoardPiece.prototype);
 ChessBoardPiece.prototype.activeMoves = function() {
   return [];
 };
 
-King = function(chess_board) {
-  BoardPiece.call(this, chess_board);
+King = function(chess_board, ocupyingNode) {
+  BoardPiece.call(this, chess_board, ocupyingNode);
   var self = this;
 
   this.activeMoves = ko.pureComputed(function(){

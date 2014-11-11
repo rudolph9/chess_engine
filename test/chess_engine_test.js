@@ -130,18 +130,29 @@ describe('BoardNode', function(){
 });
 
 describe('BoardPiece', function(){
+  var board = null;
+  beforeEach(function(done){
+    board = new Board();
+    board.buildBoardNodes();
+    done();
+  });
+
   it('#label', function(){
   });
   describe('King', function(){
-    it('should return only all neigbors as availbe moves', function() {
-      board = new Board();
-      board.buildBoardNodes();
-      king = new King();
-      king.ocupyingNode(board.nodes[1][1]);
-      king.ocupyingNode().ocupiedByPiece(king);
+    it('should return all neigbors as availbe moves when no neighbors are occupied or null', function() {
+      king = new King(board, board.nodes[1][1]);
       var i = 0;
       _.each(king.activeMoves(), function() { i++; });
       expect(i).to.equal(8);
+    });
+    it('should return only neighbors not null', function() {
+      var i;
+      var king = new King(board, null);
+      king.ocupyingNode(board.nodes[0][1]);
+      i=0; _.each(king.activeMoves(), function() { i++; }); expect(i).to.equal(5);
+      king.ocupyingNode(board.nodes[0][0]);
+      i=0; _.each(king.activeMoves(), function() { i++; }); expect(i).to.equal(3);
     });
   });
 });
