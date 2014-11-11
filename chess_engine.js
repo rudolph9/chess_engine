@@ -45,16 +45,16 @@ BoardPiece = function(board, ocupyingNode) {
   //});
 };
 
-ChessBoardPiece = function(chess_board, ocupyingNode) {
-  BoardPiece.call(this, chess_board, ocupyingNode);
+ChessBoardPiece = function(chessBoard, ocupyingNode) {
+  BoardPiece.call(this, chessBoard, ocupyingNode);
 };
 ChessBoardPiece.prototype = Object.create(BoardPiece.prototype);
 ChessBoardPiece.prototype.activeMoves = function() {
   return [];
 };
 
-King = function(chess_board, ocupyingNode) {
-  BoardPiece.call(this, chess_board, ocupyingNode);
+King = function(chessBoard, ocupyingNode) {
+  BoardPiece.call(this, chessBoard, ocupyingNode);
   var self = this;
 
   this.activeMoves = ko.pureComputed(function(){
@@ -71,8 +71,8 @@ King.prototype = Object.create(ChessBoardPiece.prototype);
 
 // Pawns are actully kind of difficult, lets start with king.
 /*
-Pawn = function(chess_board) {
-  ChessBoardPiece.call(this, chess_board);
+Pawn = function(chessBoard) {
+  ChessBoardPiece.call(this, chessBoard);
 };
 Pawn.prototype = Object.create(ChessBoardPiece.prototype);
 Pawn.prototype.availableMoves = function() {
