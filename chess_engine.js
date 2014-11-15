@@ -72,6 +72,21 @@ King = function(chessBoard, ocupyingNode, team) {
 };
 King.prototype = Object.create(ChessBoardPiece.prototype);
 
+Knight = function(chessBoard, ocupyingNode, team) {
+  BoardPiece.call(this, chessBoard, ocupyingNode, team);
+  this.initialize(chessBoard, ocupyingNode, team);
+};
+Knight.prototype = Object.create(ChessBoardPiece.prototype);
+
+Knight.prototype.initialize = function(chessBoard, ocupyingNode, team) {
+  var self = this;
+  this.activeMoves = ko.computed(function(){
+    _.each(self.ocupyingNode().neighbors, function(){
+    });
+    return []; // TODO
+  });
+};
+
 /*
 // @param forwardDir [Sting] representing the direction
 Pawn = function(chessBoard, ocupyingNode, forwardDir) {
