@@ -117,6 +117,24 @@ describe('BoardNode', function(){
     expect(typeof board_node.neighbors).not.to.equal('undefined');
     expect(typeof board_node.ocupiedByPiece).not.to.equal('undefined');
   });
+  describe('#traversDirection', function(){
+    it('shold execute the callback on every node in a given direction', function(){
+      board = new Board();
+      board.buildBoardNodes();
+      var nodes = [];
+      var callback = null;
+      callback = function(d, node){
+        nodes.push(node);
+        return true;
+      };
+      var start_node = board.nodes[0][0];
+      start_node.traverseDirection('s', callback);
+      nodes.forEach(function(i, v){
+        expect(v).to.not.equal(start_node);
+      });
+      expect(nodes.length).to.equal(7);
+    });
+  });
 
   describe('#setNeighbor', function(){
     it('should attach two board nodes', function(){

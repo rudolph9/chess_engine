@@ -34,7 +34,16 @@ BoardNode.prototype.neighborByIndex = function(i) {
   return this[this.neighborKeys[i]]();
 };
 
-
+//continues traversing of callback returns true,
+//stops if callback return false or there are no more nodes
+BoardNode.prototype.traverseDirection = function(d, callback) {
+  if(this[d]()){
+    // I feel like you shouldn't need to pass `this` into the callback,
+    // I would think `this` outside the context of the callback would be
+    // equal to `this` inside the context of the callback?
+    if (callback(d, this[d]())) this[d]().traverseDirection(d, callback);
+  }
+};
 
 BoardNode.prototype.opositeNeighborDirection = {
   n: 's',
