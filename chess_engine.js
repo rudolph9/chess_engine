@@ -92,11 +92,6 @@ King.prototype = Object.create(ChessBoardPiece.prototype);
 
 Rook = function(chessBoard, ocupyingNode, team) {
   BoardPiece.call(this, chessBoard, ocupyingNode, team);
-  this.initialize(chessBoard, ocupyingNode, team);
-};
-Rook.prototype = Object.create(ChessBoardPiece.prototype);
-
-Rook.prototype.initialize = function(chessBoard, ocupyingNode, team) {
   var self = this;
 
   this.activeMoves = ko.computed(function(){
@@ -107,14 +102,10 @@ Rook.prototype.initialize = function(chessBoard, ocupyingNode, team) {
     return moves;
   });
 };
+Rook.prototype = Object.create(ChessBoardPiece.prototype);
 
 Bishop = function(chessBoard, ocupyingNode, team) {
   BoardPiece.call(this, chessBoard, ocupyingNode, team);
-  this.initialize(chessBoard, ocupyingNode, team);
-};
-Bishop.prototype = Object.create(ChessBoardPiece.prototype);
-
-Bishop.prototype.initialize = function(chessBoard, ocupyingNode, team) {
   var self = this;
 
   this.activeMoves = ko.computed(function(){
@@ -125,6 +116,7 @@ Bishop.prototype.initialize = function(chessBoard, ocupyingNode, team) {
     return moves;
   });
 };
+Bishop.prototype = Object.create(ChessBoardPiece.prototype);
 
 
 /*
