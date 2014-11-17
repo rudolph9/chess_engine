@@ -217,6 +217,16 @@ describe('BoardPiece', function(){
       expect(bishop.activeMoves().indexOf(board.nodes[7][7]) >= 0).to.equal(true);
     });
   });
+  describe('Queen', function(){
+    it('should initialize', function(){
+      var queen = new Queen(board, board.nodes[0][1], null);
+    });
+    it('should include a horizontal and a diagnal node', function(){
+      var queen = new Queen(board, board.nodes[0][0], 'TeamA');
+      expect(queen.activeMoves().indexOf(board.nodes[7][7]) >= 0).to.equal(true);
+      expect(queen.activeMoves().indexOf(board.nodes[0][7]) >= 0).to.equal(true);
+    });
+  });
 });
 
 

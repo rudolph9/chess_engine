@@ -118,6 +118,19 @@ Bishop = function(chessBoard, ocupyingNode, team) {
 };
 Bishop.prototype = Object.create(ChessBoardPiece.prototype);
 
+Queen = function(chessBoard, ocupyingNode, team) {
+  BoardPiece.call(this, chessBoard, ocupyingNode, team);
+  var self = this;
+
+  this.activeMoves = ko.computed(function(){
+    var moves = [];
+    self.ocupyingNode().neighborKeys.forEach(function(d, i){
+      self.activeMovesBishopRookHealper(d, moves);
+    });
+    return moves;
+  });
+};
+Queen.prototype = Object.create(ChessBoardPiece.prototype);
 
 /*
 // @param forwardDir [Sting] representing the direction
