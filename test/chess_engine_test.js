@@ -201,12 +201,18 @@ describe('BoardPiece', function(){
       var rook = new Rook(board, board.nodes[0][1], 'TeamA');
       expect(rook.activeMoves().indexOf(board.nodes[0][4]) >= 0).to.equal(true);
     });
+    it('should include not include a node ocupied by a team mate', function(){
+      var rook = new Rook(board, board.nodes[0][1], 'TeamA');
+      var king = new King(board, board.nodes[0][2], 'TeamA');
+      expect(rook.activeMoves().indexOf(board.nodes[0][4])).to.equal(-1);
+      expect(rook.activeMoves().indexOf(board.nodes[0][2])).to.equal(-1);
+    });
   });
   describe('Bishop', function(){
     it('should initialize', function(){
       var bishop = new Bishop(board, board.nodes[0][1], null);
     });
-    it('should include a horizontal node', function(){
+    it('should include a diagnal node', function(){
       var bishop = new Bishop(board, board.nodes[0][0], 'TeamA');
       expect(bishop.activeMoves().indexOf(board.nodes[7][7]) >= 0).to.equal(true);
     });
