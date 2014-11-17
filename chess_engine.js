@@ -108,7 +108,24 @@ Rook.prototype.initialize = function(chessBoard, ocupyingNode, team) {
   });
 };
 
-//Rook.prototype.include = /*something only keeps the current node and the direction in memory.
+Bishop = function(chessBoard, ocupyingNode, team) {
+  BoardPiece.call(this, chessBoard, ocupyingNode, team);
+  this.initialize(chessBoard, ocupyingNode, team);
+};
+Bishop.prototype = Object.create(ChessBoardPiece.prototype);
+
+Bishop.prototype.initialize = function(chessBoard, ocupyingNode, team) {
+  var self = this;
+
+  this.activeMoves = ko.computed(function(){
+    var moves = [];
+    ['ne', 'se', 'sw', 'nw'].forEach(function(d, i){
+      self.activeMovesBishopRookHealper(d, moves);
+    });
+    return moves;
+  });
+};
+
 
 /*
 // @param forwardDir [Sting] representing the direction

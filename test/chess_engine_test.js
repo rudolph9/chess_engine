@@ -201,7 +201,15 @@ describe('BoardPiece', function(){
       var rook = new Rook(board, board.nodes[0][1], 'TeamA');
       expect(rook.activeMoves().indexOf(board.nodes[0][4]) >= 0).to.equal(true);
     });
-
+  });
+  describe('Bishop', function(){
+    it('should initialize', function(){
+      var bishop = new Bishop(board, board.nodes[0][1], null);
+    });
+    it('should include a horizontal node', function(){
+      var bishop = new Bishop(board, board.nodes[0][0], 'TeamA');
+      expect(bishop.activeMoves().indexOf(board.nodes[7][7]) >= 0).to.equal(true);
+    });
   });
 });
 
