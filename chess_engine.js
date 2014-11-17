@@ -54,6 +54,24 @@ ChessBoardPiece.prototype.activeMoves = function() {
   return [];
 };
 
+ChessBoardPiece.prototype.activeMovesBishopRookHealper = function(d, moves) {
+    var self = this;
+    self.ocupyingNode().traverseDirection(d, function(d, node){
+      if (node.ocupiedByPiece()) {
+        if (node.ocupiedByPiece().TEAM === self.TEAM) {
+          return false;
+        } else {
+          moves.push(node);
+          return false;
+        }
+      } else {
+        moves.push(node);
+        return true;
+      }
+    });
+};
+
+
 King = function(chessBoard, ocupyingNode, team) {
   BoardPiece.call(this, chessBoard, ocupyingNode, team);
   var self = this;
@@ -84,19 +102,7 @@ Rook.prototype.initialize = function(chessBoard, ocupyingNode, team) {
   this.activeMoves = ko.computed(function(){
     var moves = [];
     ['n', 'e', 's', 'w'].forEach(function(d, i){
-      self.ocupyingNode().traverseDirection(d, function(d, node){
-        if (node.ocupiedByPiece()) {
-          if (node.ocupiedByPiece().TEAM === self.TEAM) {
-            return false;
-          } else {
-            moves.push(node);
-            return false;
-          }
-        } else {
-          moves.push(node);
-          return true;
-        }
-      });
+      self.activeMovesBishopRookHealper(d, moves);
     });
     return moves;
   });
