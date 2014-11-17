@@ -193,13 +193,13 @@ describe('BoardPiece', function(){
       expect(king.activeMoves()[0].ocupiedByPiece()).to.equal(kingTeamB);
     });
   });
-  describe('Knight', function(){
+  describe('Rook', function(){
     it('should initialize', function(){
-      knight = new Knight(board, board.nodes[0][1], null);
+      var rook = new Rook(board, board.nodes[0][1], null);
     });
     it('should include a horizontal node', function(){
-      knight = new Knight(board, board.nodes[0][1], null);
-      expect(knight.activeMoves().indexOf(board.nodes[0][4]) >= 0).to.equal(true);
+      var rook = new Rook(board, board.nodes[0][1], 'TeamA');
+      expect(rook.activeMoves().indexOf(board.nodes[0][4]) >= 0).to.equal(true);
     });
 
   });

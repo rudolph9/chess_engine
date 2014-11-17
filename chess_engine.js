@@ -72,20 +72,37 @@ King = function(chessBoard, ocupyingNode, team) {
 };
 King.prototype = Object.create(ChessBoardPiece.prototype);
 
-Knight = function(chessBoard, ocupyingNode, team) {
+Rook = function(chessBoard, ocupyingNode, team) {
   BoardPiece.call(this, chessBoard, ocupyingNode, team);
   this.initialize(chessBoard, ocupyingNode, team);
 };
-Knight.prototype = Object.create(ChessBoardPiece.prototype);
+Rook.prototype = Object.create(ChessBoardPiece.prototype);
 
-Knight.prototype.initialize = function(chessBoard, ocupyingNode, team) {
+Rook.prototype.initialize = function(chessBoard, ocupyingNode, team) {
   var self = this;
+
   this.activeMoves = ko.computed(function(){
-    _.each(self.ocupyingNode().neighbors, function(){
+    var moves = [];
+    ['n', 'e', 's', 'w'].forEach(function(d, i){
+      self.ocupyingNode().traverseDirection(d, function(d, node){
+        if (node.ocupiedByPiece()) {
+          if (node.ocupiedByPiece().TEAM === self.TEAM) {
+            return false;
+          } else {
+            moves.push(node);
+            return false;
+          }
+        } else {
+          moves.push(node);
+          return true;
+        }
+      });
     });
-    return []; // TODO
+    return moves;
   });
 };
+
+//Rook.prototype.include = /*something only keeps the current node and the direction in memory.
 
 /*
 // @param forwardDir [Sting] representing the direction
