@@ -16,8 +16,26 @@ Board.prototype.buildBoardNodes = function() {
   this.connectEachColumnToEachSubsiquentColoumn(nodes);
   this.connectEachDiaginalToEachSubsiquentDiagnal(nodes, 'se');
   this.connectEachDiaginalToEachSubsiquentDiagnal(nodes.reverse(), 'ne'); nodes.reverse();
+  this.labelNodes();
 
   return nodes;
+};
+
+Board.prototype.labelNodes = function(){
+  function countNeighbors(node) {
+    var i = 0;
+    _.each(node.neighbors, function(n, dir){
+      if(n) i++;
+    });
+    return i;
+  };
+
+  this.nodes.forEach(function(row, x) {
+    row.forEach(function(n, y) {
+      n.x = x;
+      n.y = y;
+    });
+  });
 };
 
 
