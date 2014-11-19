@@ -30,7 +30,7 @@ _.each((new BoardNode()).neighbors, function(value, key){
 
 BoardNode.prototype.neighborByIndex = function(i) {
   if (i > this.neighborKeys.length - 1 || i < -this.neighborKeys.length) throw 'index out of bounds must be less than ' + this.neighborKeys.length;
-  if (i < 0) i = this.neighborKeys.length - i + 1;
+  if (i < 0) i = this.neighborKeys.length + i;
   return this[this.neighborKeys[i]]();
 };
 

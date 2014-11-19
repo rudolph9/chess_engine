@@ -149,8 +149,11 @@ describe('BoardNode', function(){
     it('should return the neighbor by index', function(){
       var bn = new BoardNode();
       var bn1 = new BoardNode();
+      var bn2 = new BoardNode();
       bn.setNeighbor('n', bn1);
+      bn.setNeighbor('nw', bn2);
       expect(bn.neighborByIndex(0)).to.equal(bn1);
+      expect(bn.neighborByIndex(-1)).to.equal(bn2);
     });
   });
 });
