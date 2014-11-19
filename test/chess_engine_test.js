@@ -230,6 +230,17 @@ describe('BoardPiece', function(){
       expect(queen.activeMoves().indexOf(board.nodes[0][7]) >= 0).to.equal(true);
     });
   });
+  describe('Knight', function(){
+    it('should initialize', function(){
+      var knight = new Knight(board, board.nodes[0][1], null);
+    });
+    it('should include available moves', function(){
+      var knight = new Knight(board, board.nodes[0][1], 'TeamA');
+      expect(knight.activeMoves()).to.contain(board.nodes[2][0]);
+      expect(knight.activeMoves()).to.contain(board.nodes[2][2])
+      expect(knight.activeMoves()).to.contain(board.nodes[1][3])
+    });
+  });
 });
 
 

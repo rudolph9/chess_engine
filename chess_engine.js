@@ -132,6 +132,33 @@ Queen = function(chessBoard, ocupyingNode, team) {
 };
 Queen.prototype = Object.create(ChessBoardPiece.prototype);
 
+Knight = function(chessBoard, ocupyingNode, team) {
+  BoardPiece.call(this, chessBoard, ocupyingNode, team);
+  var self = this;
+
+  this.activeMoves = ko.pureComputed(function(){
+    var moves = [];
+    ['n', 'e', 's', 'w'].forEach(function(d, i){
+      var i;
+      var cur_node = self.ocupyingNode();
+      for(i=0; i<1; i++){
+        if(cur_node) {
+          cur_node = cur_node[d]();
+        } else {
+          return false;
+        }
+      }
+      if(!cur_node) return false;
+      [-1, 1].forEach(function(s, i){
+        var n = cur_node.neighborByIndex(cur_node.neighborKeys.indexOf(d) + s);
+        if(n && (!n.ocupiedByPiece() || (n.ocupiedByPiece() && n.ocupiedByPiece().TEAM != self.TEAM))) moves.push(n);
+      });
+    });
+    return moves;
+  });
+};
+Knight.prototype = Object.create(ChessBoardPiece.prototype);
+
 /*
 // @param forwardDir [Sting] representing the direction
 Pawn = function(chessBoard, ocupyingNode, forwardDir) {
