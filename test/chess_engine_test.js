@@ -241,6 +241,32 @@ describe('BoardPiece', function(){
       expect(knight.activeMoves()).to.contain(board.nodes[1][3])
     });
   });
+  describe('Pawn', function(){
+    it('should initialize', function(){
+      var pawn = new Pawn(board, board.nodes[1][1], null);
+    });
+    describe('#forwardDir', function(){
+      it('should set the forwardDir correctly', function(){
+        var pawn = new Pawn(board, board.nodes[1][1], null);
+        expect(pawn.forwardDir()).to.equal('s');
+      });
+    });
+    it('should include available moves', function(){
+      var pawn = new Pawn(board, board.nodes[1][1], null);
+      expect(pawn.activeMoves()).to.contain(board.nodes[2][1]);
+    });
+    it('should include available moves', function(){
+      var pawn = new Pawn(board, board.nodes[1][1], null);
+      var pawn1 = new Pawn(board, board.nodes[2][1], null);
+      expect(pawn.activeMoves()).to.not.contain(board.nodes[2][1]);
+    });
+    it('should include available moves', function(){
+      var pawn = new Pawn(board, board.nodes[1][1], 'teamA');
+      var pawn1 = new Pawn(board, board.nodes[2][2], 'teamB');
+      expect(pawn.activeMoves()).to.contain(board.nodes[2][1]);
+      expect(pawn.activeMoves()).to.contain(board.nodes[2][2]);
+    });
+  });
 });
 
 

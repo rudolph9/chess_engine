@@ -159,23 +159,38 @@ Knight = function(chessBoard, ocupyingNode, team) {
 };
 Knight.prototype = Object.create(ChessBoardPiece.prototype);
 
-/*
 // @param forwardDir [Sting] representing the direction
-Pawn = function(chessBoard, ocupyingNode, forwardDir) {
-  ChessBoardPiece.call(this, chessBoard, ocupyingNode);
-  this.forwardDir = forwardDir;
+Pawn = function(chessBoard, ocupyingNode, team) {
+  ChessBoardPiece.call(this, chessBoard, ocupyingNode, team);
+  var self = this;
+
+  // Node is assumed to have started on the side of his team
+  // with north and south ocupying polar oposites on the board.
+  this.forwardDirObsv = ko.observable(null);
+  this.forwardDir = ko.pureComputed(function(){
+    if (self.forwardDirObsv() !== null) return self.forwardDirObsv();
+    if(self.ocupyingNode() !== null) {
+      if (self.ocupyingNode().s() && self.ocupyingNode().s().s()) {
+        self.forwardDirObsv('s');
+      } else {
+        self.forwardDirObsv('n');
+      }
+    }
+    return self.forwardDirObsv();
+  });
 
   this.activeMoves = ko.pureComputed(function(){
     // this is prime for refactoring to be inherted somehow among all activeMoves ko.computeds
     var moves = []; 
-    if (!self.ocupyingNode()) return moves;
-
-    this.currently
-
+    if (!self.ocupyingNode() || !self.forwardDir()) return moves;
+    var forward_node = self.ocupyingNode()[self.forwardDir()]()
+    if (!forward_node.ocupiedByPiece()) moves.push(forward_node);
+    ['e', 'w'].forEach(function(dir){
+      var n = forward_node[dir]();
+      if (n && n.ocupiedByPiece() && n.ocupiedByPiece().TEAM !== self.TEAM) moves.push(n);
+    });
     return moves;
   });
 };
 Pawn.prototype = Object.create(ChessBoardPiece.prototype);
 
-Pawn.prototype.
-*/
